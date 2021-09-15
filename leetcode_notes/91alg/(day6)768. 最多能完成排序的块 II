@@ -1,0 +1,34 @@
+```golang
+func maxChunksToSorted(arr []int) int {
+    res := 0
+    minRight := make([]int ,len(arr))
+    maxLeft:=arr[0]
+    minRight[len(arr)-1] = arr[len(arr)-1]
+   //维护一个数组，保存其右边最小的值
+    for i:=len(arr)-2;i>=0;i--{
+        minRight[i] = min(minRight[i+1],arr[i])
+    }
+    //遍历数组，将左边的最大值和左边的最小值比较
+    for i:=0;i<len(arr)-1;i++{
+        maxLeft = max(maxLeft,arr[i])
+        if (maxLeft<=minRight[i+1]){
+            res ++
+        }
+    }
+    return res+1 
+}
+//返回两数较小的
+func min(a int, b int) int{
+    if a < b{
+        return a
+    }
+    return b
+}
+//返回两数较大的
+func max(a int, b int) int{
+    if a > b{
+        return a
+    }
+    return b
+}
+```
