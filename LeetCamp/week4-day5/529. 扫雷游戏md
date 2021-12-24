@@ -1,0 +1,33 @@
+```python
+class Solution:
+    directions = [(1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (-1, 1), (-1, -1), (1, -1)]
+    def updateBoard(self, board: List[List[str]], click: List[int]) -> List[List[str]]:
+        if board[click[0]][click[1]] == 'M':
+            board[click[0]][click[1]] = 'X'
+            return board
+        
+        m, n = len(board), len(board[0])
+        check = lambda i, j, char: 0 <= i < m and 0 <= j < n and board[i][j] == char
+
+        def count_miners(i, j):
+            miners = 0
+            for ni, nj in Solution.directions:
+                ni, nj = ni + i, nj + j
+                miners += check(ni, nj, 'M')
+            
+            return miners
+        
+        def dfs(i, j):
+            miners = count_miners(i, j)
+            if not miners:
+                board[i][j] = 'B'
+                for ni, nj in Solution.directions:
+                    ni, nj = ni + i, nj + j
+                    if check(ni, nj, 'E'):
+                        dfs(ni, nj)
+            else:
+                board[i][j] = str(miners)
+
+        dfs(*click)
+        return board
+```
