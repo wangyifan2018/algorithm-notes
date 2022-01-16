@@ -1,4 +1,4 @@
-```python
+```js
 /**
  * @param {number[]} nums
  * @return {number}
